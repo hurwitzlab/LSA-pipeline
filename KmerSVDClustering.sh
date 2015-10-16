@@ -30,7 +30,7 @@ if [ $? -ne 0 ]; then echo "printing end of last log file..."; tail Logs/KmerClu
 echo $(date) Starting k-mer clustering
 # number of tasks is 2**hash_size/10**6 + 1
 numClusterTasks=`sed -n 1p hashed_reads/hashParts.txt`
-parallel -j $numThreads --no-notice --halt-on-error 2 \
+parallel -j $numThreads --halt-on-error 2 \
 'echo $(date) clustering k-mer chunk {}; \
 python LSA/kmer_cluster_part.py -r {} -i hashed_reads/ -o cluster_vectors/ -t $clustThresh >> Logs/KmerClusterParts.log 2>&1' \
 ::: $(seq 1 $numClusterTasks)
@@ -39,7 +39,7 @@ if [ $? -ne 0 ]; then echo "printing end of last log file..."; tail Logs/KmerClu
 # KmerClusterMerge
 # number of tasks is number of clusters
 numClusterTasks=`sed -n '1p' cluster_vectors/numClusters.txt`
-parallel -j $numThreads --no-notice --halt-on-error 2 \
+parallel -j $numThreads --halt-on-error 2 \
 'echo $(date) merging chunks for k-mer cluster {}; \
 python LSA/kmer_cluster_merge.py -r {} -i cluster_vectors/ -o cluster_vectors/ >> Logs/KmerClusterMerge.log 2>&1' \
 ::: $(seq 1 $numClusterTasks)

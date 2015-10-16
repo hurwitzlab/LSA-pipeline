@@ -15,7 +15,7 @@ numThreads=$1
 # ReadPartitions
 mkdir tmp
 numInputFiles=$(ls -l hashed_reads/*.hashq.* | grep ^- | wc -l)
-parallel -j $numThreads --no-notice --halt-on-error 2 \
+parallel -j $numThreads --halt-on-error 2 \
 'echo $(date) partitioning reads in hashed input file {}; \
 python LSA/write_partition_parts.py -r {} -i hashed_reads/ -o cluster_vectors/ -t tmp/ >> Logs/ReadPartitions.log 2>&1; \
 if [ $? -ne 0 ]; then exit 1; fi' \
@@ -26,7 +26,7 @@ rm -r tmp
 # MergeIntermediatePartitions
 mkdir read_partitions
 numClusterTasks=`sed -n '1p' cluster_vectors/numClusters.txt`
-parallel -j $numThreads --no-notice --halt-on-error 2 \
+parallel -j $numThreads --halt-on-error 2 \
 'echo $(date) merging partitions parts for cluster {}; \
 python LSA/merge_partition_parts.py -r {} -i cluster_vectors/ -o read_partitions/ >> Logs/MergeIntermediatePartitions.log 2>&1; \
 if [ $? -ne 0 ]; then exit 1; fi' \

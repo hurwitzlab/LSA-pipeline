@@ -3,15 +3,23 @@
 import sys,getopt,os
 
 SplitInput_string = """#!/bin/bash
-#BSUB -J SplitInput[1-%numSamples%]
-#BSUB -o Logs/SplitInput-Out-%I.out
-#BSUB -e Logs/SplitInput-Err-%I.err
-#BSUB -q week
-#BSUB -W 23:58
+#PBS -N SplitInput[1-%numSamples%]
+#PBS -o Logs/SplitInput-Out-%I.out
+#PBS -e Logs/SplitInput-Err-%I.err
+#PBS -W group_list=bhurwitz
+#PBS -q standard
+#PBS -l jobtype=cluster_only
+#PBS -l select=1:ncpus=6:mem=11gb
+#PBS -l pvmem=22gb
+#PBS -l place=pack:shared
+#PBS -l walltime=48:00:00
+#PBS -l cput=48:00:00
+#PBS -M scottdaniel@email.arizona.edu
+#PBS -m bea
 echo Date: `date`
 t1=`date +%s`
-sleep ${LSB_JOBINDEX}
-python LSFScripts/array_merge.py -r ${LSB_JOBINDEX} -i %input% -o original_reads/
+sleep ${PBS_ARRAY_INDEX}
+python LSFScripts/array_merge.py -r ${PBS_ARRAY_INDEX} -i %input% -o original_reads/
 [ $? -eq 0 ] || echo 'JOB FAILURE: $?'
 echo Date: `date`
 t2=`date +%s`

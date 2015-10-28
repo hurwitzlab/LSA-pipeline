@@ -30,5 +30,5 @@ if __name__ == "__main__":
 	p2 = fp[:-1] + '2'
 	s = fp[:fp.index('.fastq')] + '.single.fastq.1'
 	o = outputdir + fp[fp.rfind('/')+1:fp.index('.fastq')]
-	os.system('python LSFScripts/merge_and_split_pair_files.py -1 %s -2 %s -s %s -o %s' % (p1,p2,s,o))
-	os.system('python LSFScripts/merge_and_split_pair_files.py -s %s -o %s' % (s[:-1] + '2',o))
+	os.system('python PBS_Scripts/merge_and_split_pair_files.py -1 %s -2 %s -s %s -o %s' % (p1,p2,s,o))
+	os.system('python PBS_Scripts/merge_and_split_pair_files.py -s %s -o %s' % (s[:-1] + '2',o))

@@ -19,7 +19,7 @@ SplitInput_string = """#!/bin/bash
 echo Date: `date`
 t1=`date +%s`
 sleep ${PBS_ARRAY_INDEX}
-python LSFScripts/array_merge.py -r ${PBS_ARRAY_INDEX} -i %input% -o original_reads/
+python PBS_Scripts/array_merge.py -r ${PBS_ARRAY_INDEX} -i %input% -o original_reads/
 [ $? -eq 0 ] || echo 'JOB FAILURE: $?'
 echo Date: `date`
 t2=`date +%s`
@@ -46,6 +46,6 @@ if __name__ == "__main__":
 			n = arg
 	for dir in ['Logs','original_reads','hashed_reads','cluster_vectors','read_partitions']:
 		os.system('mkdir %s' % (dir))
-	f = open('LSFScripts/SplitInput_ArrayJob.q','w')
+	f = open('PBS_Scripts/SplitInput_ArrayJob.q','w')
 	f.write(SplitInput_string.replace('%numSamples%',n).replace('%input%',inputdir))
 	f.close()

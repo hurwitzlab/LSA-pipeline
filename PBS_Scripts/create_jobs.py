@@ -43,7 +43,7 @@ JobParams = {
 		'outfile': """KmerClusterIndex_Job.q""",
 		'header': ["""#BSUB -J KmerClusterIndex""","""#BSUB -o PROJECT_HOME/Logs/KmerClusterIndex-Out.out""","""#BSUB -e PROJECT_HOME/Logs/KmerClusterIndex-Err.err""","""#BSUB -q week""","""#BSUB -R 'rusage[mem=1]'""","""#BSUB -M 35"""],
 		# adjust cluster thresh (-t) as necessary
-		'body': ["""python LSA/kmer_cluster_index.py -i PROJECT_HOME/hashed_reads/ -o PROJECT_HOME/cluster_vectors/ -t 0.7""","""python LSFScripts/create_jobs.py -j KmerClusterParts -i ./""","""X=`sed -n 1p hashed_reads/hashParts.txt`""","""sed -i 's/%parts%/$X/g' LSFScripts/KmerClusterParts_ArrayJob.q""","""python LSFScripts/create_jobs.py -j LSFScripts/KmerClusterMerge -i ./""","""X=`sed -n 1p cluster_vectors/numClusters.txt`""","""sed -i 's/%clusters%/$X/g' LSFScripts/KmerClusterMerge_ArrayJob.q"""]},
+		'body': ["""python LSA/kmer_cluster_index.py -i PROJECT_HOME/hashed_reads/ -o PROJECT_HOME/cluster_vectors/ -t 0.7""","""python PBS_Scripts/create_jobs.py -j KmerClusterParts -i ./""","""X=`sed -n 1p hashed_reads/hashParts.txt`""","""sed -i 's/%parts%/$X/g' PBS_Scripts/KmerClusterParts_ArrayJob.q""","""python PBS_Scripts/create_jobs.py -j PBS_Scripts/KmerClusterMerge -i ./""","""X=`sed -n 1p cluster_vectors/numClusters.txt`""","""sed -i 's/%clusters%/$X/g' PBS_Scripts/KmerClusterMerge_ArrayJob.q"""]},
 	'KmerClusterParts': {
 		'outfile': """KmerClusterParts_ArrayJob.q""",
 		# number of tasks is 2**hash_size/10**6 + 1
@@ -140,7 +140,7 @@ if __name__ == "__main__":
 		array_size = str(len(FP))
 		params['header'][0] += array_size+']'
 		print job+' array size will be '+array_size
-	f = open(inputdir+'LSFScripts/'+params['outfile'],'w')
+	f = open(inputdir+'PBS_Scripts/'+params['outfile'],'w')
 	f.write('\n'.join(CommonElements['header']) + '\n')
 	f.write('\n'.join(params['header']).replace('PROJECT_HOME/',inputdir) + '\n')
 	f.write('\n'.join(CommonElements['body']) + '\n')

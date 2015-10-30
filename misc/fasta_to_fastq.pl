@@ -26,11 +26,11 @@ sub main {
 sub get_args {
     my %args;
     my $file;
-    my $outfile;
+    my $outdir;
     GetOptions(
         \%args,
         'f|file=s'      =>  \$file,
-        'o|outfile=s'   =>  \$outfile,
+        'o|outdir=s'   =>  \$outdir,
         'help',
         'man',
     ) or pod2usage(2);
@@ -55,7 +55,7 @@ fastaToFastq.pl - a script to add fake quality scores to fasta and make it a fas
 Options:
 
   -f|--file     fasta file that will be converted
-  -o|--outfile  fastq file that will be written
+  -o|--outdir   directory to put fastq files in  
   --help        Show brief help and exit
   --man         Show full documentation
 

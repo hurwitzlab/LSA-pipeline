@@ -39,6 +39,8 @@ echo Found \"$NUM_FILES\" files to process
 
 while read FILE; do
 
+    echo "Processing $FILE"
+    ./fasta_to_fastq.pl --file $FILE --outdir $FASTQ_SPLIT
 
 done < $TMP_FILES
 

@@ -1,1 +1,11 @@
-change all instances of 'LSFScripts' to 'PBS_Scripts'
+√change all instances of 'LSFScripts' to 'PBS_Scripts'
+
+need to change something like this:
+/gsfs1/rsgrps/bhurwitz/scottdaniel/uproc_shortread_to_pfam/data/split/DNA_4_GCCAAT_L002_R1_007.fa/00.fa
+
+to this:
+sample_id.fastq.xxx, where ”.xxx” is the chunk number (eg ‘.021’)
+
+merge fastaToFastq.pl with fasta_to_fastq.pl (prefer the last name)
+
+get help from that one script i co-wrote with bonnie in utils or uproc where i learned some basic input/output stuff

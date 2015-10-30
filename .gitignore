@@ -1,3 +1,5 @@
 *.pyc
 docs
 original_reads
+Logs
+*.q

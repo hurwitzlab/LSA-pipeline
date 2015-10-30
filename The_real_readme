@@ -1,0 +1,3 @@
+run python ./PBS_Scripts/setupDirs.py first
+#Next step is not actually working because of bad documentation on the account of LSA programmers (didn't document how to convert LSF scripts to PBS scripts)
+then qsub ./PBS_Scripts/SplitInput_ArrayJob.q

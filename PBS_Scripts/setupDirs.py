@@ -19,6 +19,7 @@ SplitInput_string = """#!/bin/bash
 echo Date: `date`
 t1=`date +%s`
 sleep ${PBS_ARRAY_INDEX}
+cd $PBS_O_WORKDIR
 python PBS_Scripts/array_merge.py -r ${PBS_ARRAY_INDEX} -i %input% -o original_reads/
 [ $? -eq 0 ] || echo 'JOB FAILURE: $?'
 echo Date: `date`
